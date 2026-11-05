@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spot the Phish</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Spot the Phish</h1>
+  <p>Can you tell a real message from a fake one?</p>
+    <div class="card">
+    <p class="label">Message 1 of 5</p>
+
+    <div class="message" id="message">
+      <p><strong>From:</strong> security@mtn-momo-verify.example</p>
+      <p>Your Mobile Money account will be blocked in 24 hours. Click here to verify your PIN now.</p>
+    </div>
+
+    <div class="buttons">
+      <button id="phish-btn">Phishing</button>
+      <button id="safe-btn">Safe</button>
+    </div>
+
+    <p id="feedback"></p>
+  </div>
+    <script src="script.js"></script>
+</body>
+</html>
