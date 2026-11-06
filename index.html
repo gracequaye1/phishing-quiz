@@ -3,27 +3,558 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spot the Phish</title>
-    <link rel="stylesheet" href="style.css">
+
+  <meta name="description" content="Test your cybersecurity knowledge with Spot the Phish by Duchess Tech Space. Learn to identify phishing messages and stay safe online.">
+
+  <meta name="theme-color" content="#170d24">
+
+  <title>Spot the Phish | Duchess Tech Space</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-  <h1>Spot the Phish</h1>
-  <p>Can you tell a real message from a fake one?</p>
-    <div class="card">
-    <p class="label">Message 1 of 5</p>
 
-    <div class="message" id="message">
-      <p><strong>From:</strong> security@mtn-momo-verify.example</p>
-      <p>Your Mobile Money account will be blocked in 24 hours. Click here to verify your PIN now.</p>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- HEADER -->
+
+  <header class="site-header">
+    <a href="#" class="brand">
+      <span class="brand-name">THE DUCHESS TECH SPACE</span>
+    </a>
+
+    <div class="header-right">
+      <span class="header-tag">CYBER AWARENESS</span>
+
+      <div class="duchess-avatar" aria-label="Duchess avatar placeholder">
+        <span>DH</span>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- WELCOME SCREEN -->
+
+    <section id="welcome-screen" class="screen welcome-screen">
+
+      <div class="hero-badge">🛡️ CYBERSECURITY CHALLENGE</div>
+
+      <h1>SPOT THE <span>PHISH!</span></h1>
+
+      <p class="hero-subtitle">
+        Think you're smart enough to spot a scam?
+        Let's put your cybersecurity instincts to the test!
+      </p>
+
+      <div class="hero-illustration">
+        <div class="hero-icon">🎣</div>
+        <div class="hero-shield">🛡️</div>
+        <div class="hero-sparkle">✨</div>
+      </div>
+
+      <div class="welcome-card">
+
+        <h2>Ready, Cyber Detective?</h2>
+
+        <p>
+          You'll receive 10 messages. Some are safe.
+          Others are phishing attempts. Can you tell the difference?
+        </p>
+
+        <label for="player-name">Enter your nickname</label>
+
+        <input
+          type="text"
+          id="player-name"
+          placeholder="Your nickname..."
+          maxlength="20"
+          autocomplete="nickname"
+          required
+        >
+
+        <button id="start-btn" class="primary-btn">
+          START CHALLENGE →
+        </button>
+
+        <p class="small-note">
+          10 questions · Instant feedback · No sign-up required
+        </p>
+
+      </div>
+
+      <div class="mini-stats">
+        <div>
+          <strong>10</strong>
+          <span>Questions</span>
+        </div>
+
+        <div>
+          <strong>2</strong>
+          <span>Choices</span>
+        </div>
+
+        <div>
+          <strong>1</strong>
+          <span>Cyber Detective</span>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- QUIZ SCREEN -->
+
+    <section id="quiz-screen" class="screen quiz-screen" hidden>
+
+      <div class="quiz-top">
+
+        <div>
+          <p class="eyebrow">DUCHESS CYBER CHALLENGE</p>
+          <h2>Spot the Phish!</h2>
+        </div>
+
+        <div class="score-box">
+          <span>YOUR SCORE</span>
+          <strong id="score">0</strong>
+        </div>
+
+      </div>
+
+      <div class="progress-information">
+
+        <span id="question-number">QUESTION 1 OF 10</span>
+
+        <span id="progress-percent">10%</span>
+
+      </div>
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="Quiz progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="10"
+        id="progress-bar"
+      >
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+
+      <div
+        id="progress-dots"
+        class="progress-dots"
+        aria-label="Question progress"
+      ></div>
+
+
+      <!-- MESSAGE CARD -->
+
+      <div class="message-card">
+
+        <div class="message-card-header">
+
+          <span class="mail-icon">✉️</span>
+
+          <span>INCOMING MESSAGE</span>
+
+          <span id="message-type" class="message-type">SMS</span>
+
+        </div>
+
+        <h3 id="scenario-title">A suspicious message</h3>
+
+        <div class="message-preview">
+
+          <div class="sender-details">
+
+            <div class="sender-avatar">?</div>
+
+            <div>
+              <span class="sender-label">SENDER</span>
+              <p id="sender">sender@example</p>
+            </div>
+
+          </div>
+
+          <div class="message-body">
+            <p id="message-text"></p>
+          </div>
+
+        </div>
+
+        <p class="question-prompt">
+          What do you think? Is this message safe or phishing?
+        </p>
+
+        <div class="answer-buttons">
+
+          <button id="phish-btn" class="answer-btn phish-btn">
+            🎣 PHISHING
+          </button>
+
+          <button id="safe-btn" class="answer-btn safe-btn">
+            🛡️ SAFE
+          </button>
+
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div
+          id="feedback"
+          class="feedback"
+          aria-live="polite"
+          hidden
+        >
+
+          <h3 id="feedback-title"></h3>
+
+          <p id="feedback-text"></p>
+
+        </div>
+
+        <button id="next-btn" class="primary-btn next-btn" hidden>
+          NEXT QUESTION →
+        </button>
+
+      </div>
+
+      <p class="quiz-footer">
+        Stay alert. Think before you click. Protect your digital life. 
+      </p>
+
+    </section>
+
+
+    <!-- RESULTS SCREEN -->
+
+    <section id="results-screen" class="screen results-screen" hidden>
+
+      <div class="result-trophy">🏆</div>
+
+      <p class="eyebrow">CHALLENGE COMPLETED</p>
+
+      <h1>WELL DONE, <span id="result-name">DETECTIVE</span>!</h1>
+
+      <div class="result-score-card">
+
+        <p>YOUR FINAL SCORE</p>
+
+        <div class="score-circle">
+          <strong id="final-score">0</strong>
+          <span>/10</span>
+        </div>
+
+        <div class="result-progress">
+          <div id="result-fill"></div>
+        </div>
+
+        <h2 id="result-message">CYBER SMART CHAMPION!</h2>
+
+        <p id="result-detail"></p>
+
+      </div>
+
+      <div class="result-buttons">
+
+        <button id="play-again" class="primary-btn">
+          🔄 PLAY AGAIN
+        </button>
+
+        <button id="share-result" class="secondary-btn">
+          📤 SHARE MY SCORE
+        </button>
+
+      </div>
+
+
+      <!-- LEADERBOARD -->
+
+      <div class="leaderboard-card">
+
+        <p class="eyebrow">THE CYBER CHAMPIONS</p>
+
+        <h2>🏆 LEADERBOARD</h2>
+
+        <p class="leaderboard-description">
+          The top 10 scores saved on this browser.
+        </p>
+
+        <div id="leaderboard" aria-live="polite"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LEARNING SECTION -->
+
+    <section id="learning-section" class="learning-section">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">KNOWLEDGE IS PROTECTION</p>
+
+        <h2>Learn the <span>Warning Signs.</span></h2>
+
+        <p>
+          Before you click, pay attention.
+          Here are some common signs of phishing.
+        </p>
+
+      </div>
+
+      <div class="warning-grid">
+
+        <article class="warning-card">
+          <span>🚨</span>
+          <h3>Urgent Messages</h3>
+          <p>
+            Messages threatening to block your account or demanding
+            immediate action.
+          </p>
+        </article>
+
+        <article class="warning-card">
+          <span>🎁</span>
+          <h3>Unexpected Prizes</h3>
+          <p>
+            You've won money or gifts in competitions you never entered.
+          </p>
+        </article>
+
+        <article class="warning-card">
+          <span>🔐</span>
+          <h3>Requests for PINs</h3>
+          <p>
+            Someone asks for your Mobile Money PIN, password or OTP.
+          </p>
+        </article>
+
+        <article class="warning-card">
+          <span>🔗</span>
+          <h3>Suspicious Links</h3>
+          <p>
+            Unexpected links that lead to unfamiliar websites or login pages.
+          </p>
+        </article>
+
+        <article class="warning-card">
+          <span>📎</span>
+          <h3>Unexpected Attachments</h3>
+          <p>
+            Unknown senders asking you to download or open strange files.
+          </p>
+        </article>
+
+        <article class="warning-card">
+          <span>💸</span>
+          <h3>Payment Requests</h3>
+          <p>
+            Requests for processing fees, delivery charges or money
+            to claim unexpected rewards.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="safety-tip">
+
+        <span>💡</span>
+
+        <div>
+          <h3>Remember the golden rule!</h3>
+          <p>
+            Stop. Check. Verify. Never share your PIN, password
+            or OTP. Contact the organisation through a trusted
+            official channel if something feels suspicious.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+   <!-- CONNECT WITH THE DUCHESS -->
+
+    <section class="connect-section" id="connect">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">LET'S STAY CONNECTED</p>
+
+        <h2>Connect with <span>The Duchess.</span> </h2>
+
+        <p>
+          Enjoyed the challenge? Follow my journey, connect with
+          our community and continue growing your tech skills.
+        </p>
+
+      </div>
+
+      <!-- SOCIAL MEDIA -->
+
+      <div class="social-card">
+
+        <div class="community-icon">💜</div>
+
+        <h3>Follow the Duchess</h3>
+
+        <p>Find me across the internet.</p>
+
+        <div class="social-links">
+
+          <a href="https://www.instagram.com/the_duchess_of_hackers/"
+             target="_blank" rel="noopener noreferrer">
+            Instagram ↗
+          </a>
+
+          <a href="https://x.com/DuchessCodes"
+             target="_blank" rel="noopener noreferrer">
+            X (Twitter) ↗
+          </a>
+
+          <a href="https://www.linkedin.com/in/grace-okailey-quaye"
+             target="_blank" rel="noopener noreferrer">
+            LinkedIn ↗
+          </a>
+
+          <a href="https://github.com/gracequaye1"
+             target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+
+          <a href="https://www.tiktok.com/@the.duchess.of.ha"
+             target="_blank" rel="noopener noreferrer">
+            TikTok ↗
+          </a>
+
+          <a href="https://duchessofhackers.substack.com"
+             target="_blank" rel="noopener noreferrer">
+            Substack ↗
+          </a>
+
+          <a href="https://dev.to/the_duchess_of_hackers"
+             target="_blank" rel="noopener noreferrer">
+            DEV Community ↗
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- WHATSAPP CHANNEL -->
+
+      <div class="community-card">
+
+        <p class="eyebrow">STAY CONNECTED</p>
+
+        <h3>Join Duchess Tech Space!</h3>
+
+        <p>
+          Stay updated with technology news, learning opportunities,
+          cybersecurity awareness, useful resources and community
+          announcements.
+        </p>
+
+        <a
+          href="https://whatsapp.com/channel/0029Vb6eaheL7UVPZyhMb20u"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="community-btn"
+        >
+          JOIN OUR WHATSAPP CHANNEL →
+        </a>
+
+      </div>
+
+
+      <!-- TECHNOLOGY LEARNING COMMUNITY -->
+
+      <div class="class-card">
+
+        <p class="eyebrow">LEARN • CONNECT • GROW</p>
+
+        <h3>Find Your People. Grow Your Tech Skills.</h3>
+
+        <p>
+          Whether you're passionate about cybersecurity,
+          Python, web development or exploring another area of technology,
+          there's a place for you here.
+        </p>
+
+        <div class="class-details">
+          <span>Cybersecurity</span>
+          <span>Python</span>
+          <span>Web Development</span>
+          <span>More Tech Learning Groups</span>
+        </div>
+
+        <p class="community-invitation">
+          Interested in cybersecurity? Come connect with fellow
+          Cyber Lovers. Interested in other tech fields? You're
+          welcome too!
+        </p>
+
+        <a
+          href="https://chat.whatsapp.com/KqSlaJRTQZU4uaYAkNf3Pk"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="class-btn"
+        >
+          JOIN OUR TECH COMMUNITY →
+        </a>
+
+      </div>
+
+
+      <!-- DUCHESS SIGNATURE -->
+
+      <div class="connect-signature">
+        <p>Created with purpose, curiosity and 💜</p>
+        <h3>The Duchess of Hackers</h3>
+        <p>Building, learning and empowering tech lovers.</p>
+        <p class="duchessians">For the Cyber Lovers. For the Tech Lovers.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="daily-quote">
+      <p class="eyebrow">A LITTLE REMINDER</p>
+
+      <p id="motivational-quote" aria-live="polite">
+        Your curiosity is your greatest tool. Never stop learning.
+      </p>
     </div>
 
-    <div class="buttons">
-      <button id="phish-btn">Phishing</button>
-      <button id="safe-btn">Safe</button>
-    </div>
+    <p>
+      © 2026 The Duchess of Hackers. All rights reserved.
+    </p>
 
-    <p id="feedback"></p>
-  </div>
-    <script src="script.js"></script>
+    <p>
+      An educational cybersecurity awareness project.
+    </p>
+
+    <p class="footer-brand">
+      THINK BEFORE YOU CLICK.
+    </p>
+
+  </footer>
+
 </body>
 </html>
