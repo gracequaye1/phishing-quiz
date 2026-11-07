@@ -573,11 +573,11 @@ playAgainBtn.addEventListener("click", function() {
 
 shareResultBtn.addEventListener("click", async function() {
 
-  const shareText =
-    "I just scored " + score +
-    "/10 in Spot the Phish by Duchess Tech Space! 👑💜 " +
-    "Can you beat my score?";
+const quizLink = "https://gracequaye1.github.io/phishing-quiz/";
 
+  const shareText =
+    "I scored " + score + "/10 in Spot the Phish by Duchess Tech Space! 👑\n\n" +
+    "Think you can spot more scams than me? Take the challenge and beat my score 👉 " + quizLink;
   if (navigator.share) {
 
     try {
